@@ -1,24 +1,23 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import { createForms } from 'react-redux-form';
-import { Dishes } from './dishes';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createForms } from 'react-redux-form'; // Lets us bring form state into store, so form state can persist across views (contrast to LocalForm)
 import { Comments } from './comments';
-import { Promotions } from './promotions';
+import { Dishes } from './dishes';
 import { Leaders } from './leaders';
-import { InitialFeedback } from './forms';
+import { Promotions } from './promotions';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-
+import logger from 'redux-logger'; // Logs action nicely to console (prev state, action, next state)
+import { InitialFeedback } from './forms';
 
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
-            dishes: Dishes,
             comments: Comments,
-            promotions: Promotions,
+            dishes: Dishes,
             leaders: Leaders,
+            promotions: Promotions,
             ...createForms({
-                feedback: InitialFeedback
-            })
+                feedback: InitialFeedback,
+            }),
         }),
         applyMiddleware(thunk, logger)
     );
